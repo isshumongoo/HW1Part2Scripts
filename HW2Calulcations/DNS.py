@@ -48,8 +48,8 @@ def main(cache_duration, one_way_time, query_times):
 
 if __name__ == "__main__":
     # These values can be changed as needed
-    cache_duration = 47
-    one_way_time = 7
-    query_times = [0, 47021, 94098]
+    cache_duration = 60
+    one_way_time = 3
+    query_times = [0, 60032, 120029]
     
     main(cache_duration, one_way_time, query_times)

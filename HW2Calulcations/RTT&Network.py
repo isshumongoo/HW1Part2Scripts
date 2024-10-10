@@ -1,4 +1,3 @@
-#9 answer question
 class InternetPathSolution:
     def __init__(self, transmission_rate: int,
                  number_of_links: int,
@@ -143,3 +142,93 @@ class InternetPathSolution:
     def solve(self) -> str:
         return f"{round(self._calculate_round_trip_time(), 3)},{round(self._calculate_first_packet_arrival_time(), 3)},{round(self._calculate_first_packet_arrival_time_two_hops(), 3)},{round(self._calculate_time_http_client_receives_first_packet(), 3)},{round(self._calculate_time_to_receive_the_whole_web_page(), 3)},{round(self._calculate_time_elapses_to_receive_first_image(), 3)},{round(self._calculate_time_for_webpage_to_be_displayed(), 3)},{round(self._calculate_time_elapsed_to_display_webpage_all_tcp_connections(), 3)},{round(self._calculate_time_to_display_entire_webpage(), 3)}"
 
+
+
+class InstitutionalNetworkResponseTimeSolution:
+    def __init__(self, network_bandwidth: float, access_link_bandwidth: float, web_object_size: float, average_request_rate: float, response_time: float, cache_percentage: float, invalid_cache_percentage: float):
+        self.network_bandwidth = network_bandwidth
+        self.access_link_bandwidth = access_link_bandwidth
+        self.web_object_size = web_object_size
+        self.average_request_rate = average_request_rate
+        self.response_time = response_time
+        self.cache_percentage = cache_percentage
+        self.invalid_cache_percentage = invalid_cache_percentage
+
+        # Delta: time to send an object over the access link in seconds
+        self.delta = self.web_object_size / self.access_link_bandwidth
+
+        self.access_delay = self.delta / \
+            (1 - (self.average_request_rate * self.delta))  # in seconds
+
+        self.transmission_delay = self.web_object_size / \
+            self.network_bandwidth  # in seconds
+
+        self.total_response_time = self.access_delay + \
+            self.transmission_delay + self.response_time  # in seconds
+
+        self.valid_cache = self.cache_percentage * \
+            (1 - self.invalid_cache_percentage / 100) / 100  # convert to decimal
+
+        self.arrival_rate = self.average_request_rate * \
+            (1 - self.valid_cache)  # objects per second
+
+        self.access_delay_with_proxy = self.delta / \
+            (1 - (self.arrival_rate * self.delta))  # in seconds
+
+        self.response_time_one = self.web_object_size / \
+            self.network_bandwidth  # time for a cached object in seconds
+        self.response_time_two = self.access_delay_with_proxy + self.response_time + \
+            self.response_time_one  # time for a non-cached object in seconds
+
+        self.average_response_time_with_proxy = (self.valid_cache * self.response_time_one) + (
+            (1 - self.valid_cache) * self.response_time_two)  # in seconds
+
+        self.access_delay_ms = self.access_delay * 1000  # milliseconds
+        self.total_response_time_ms = self.total_response_time * 1000  # milliseconds
+        self.access_delay_with_proxy_ms = self.access_delay_with_proxy * 1000  # milliseconds
+        self.average_response_time_with_proxy_ms = self.average_response_time_with_proxy * \
+            1000  # milliseconds
+
+    def solve(self) -> str:
+        return f"{self.access_delay_ms:.1f},{self.total_response_time_ms:.1f},{self.access_delay_with_proxy_ms:.1f},{self.average_response_time_with_proxy_ms:.1f}"
+
+
+
+if __name__ == "__main__":
+    network_bandwidth = 1.4 * 10 ** 9  # Gbps to bits
+    access_link_bandwidth = 8 * 10 ** 6  # Mbps to bits
+    web_object_size = 150 * 10 ** 3  # Kbits to bits
+    average_request_rate = 50  # requests per second
+    response_time = .7  # seconds
+    cache_percentage = 50  # percentage of objects in cache
+    invalid_cache_percentage = 20  # percentage of cached objects that are invalid
+
+    response_time = InstitutionalNetworkResponseTimeSolution(network_bandwidth,
+                                                             access_link_bandwidth,
+                                                             web_object_size,
+                                                             average_request_rate,
+                                                             response_time,
+                                                             cache_percentage,
+                                                             invalid_cache_percentage)
+    print(response_time.solve() + "!!!!!!!!!")
+
+    transmission_rate = 12 * 10**6  # megabits per second
+    number_of_links = 3
+    number_of_routers = 2
+    length_of_link = 3000 * 10**3  #  kilometers in meters
+    signal_propagation_speed = 1.6 * 10**8  #  meters per second
+    webpage_size = 7 * 8 * 10**3  #  kilobytes in bits
+    number_of_images = 18
+    image_size = 140 * 8 * 10**3  #  kilobytes in bits
+    max_pkt_size = 1 * 8 * 10**3  # In bits
+
+    
+    internet_path = InternetPathSolution(transmission_rate,
+                                         number_of_links,
+                                         number_of_routers,
+                                         length_of_link,
+                                         signal_propagation_speed,
+                                         webpage_size,
+                                         number_of_images,
+                                         image_size, max_pkt_size)
+    print(internet_path.solve())
