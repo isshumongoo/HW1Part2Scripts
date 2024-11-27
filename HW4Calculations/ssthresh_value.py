@@ -1,15 +1,15 @@
-ssthresh = 32
-ad_receiver_window_size = 81
+ssthresh = 64
+ad_receiver_window_size = 136
 segment_size = 1
-cwnd = 11
+cwnd = 8
 #Q1
-received_in_row = 24
+received_in_row = 51
 #Q2
-Before_TCP_window_size = 37
+Before_TCP_window_size = 76
 #Q3
-After_TCP_window_size = 52
-New_Consecutive_ACKs = 52
-last_ad_window_size = 42
+After_TCP_window_size = 108
+New_Consecutive_ACKs = 108
+last_ad_window_size = 92
 #Q4 & Q5 & Q6
 Duplicate_ACKs = 4
 

@@ -1,14 +1,14 @@
-Current_RTT = 34
-Current_DEV = 5
-TRANS_1 = 3
-TRANS_2 = 23
-TRANS_3 = 34
-TRANS_4 = 49
-TRANS_5 = 67
-ACK_1 = 31
-ACK_2 = 63
-ACK_3 = 85
-ACK_4 = 101 #Repeat
+Current_RTT = 46
+Current_DEV = 2
+TRANS_1 = 6
+TRANS_2 = 19
+TRANS_3 = 31
+TRANS_4 = 46
+TRANS_5 = 63
+ACK_1 = 47
+ACK_2 = 79
+ACK_3 = 86
+ACK_4 = 106 #Repeat
 
 RTT_1 = ACK_1 - TRANS_1 #1 seg
 RTT_2 = ACK_2 - TRANS_3 #3 seg
